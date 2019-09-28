@@ -1,0 +1,6 @@
+No_strategies_of_Ag1  2
+No_strategies_of_Ag2  2
+Ag1_payoff_when_Ag1_plays_s1  3  0
+Ag2_payoff_when_Ag1_plays_s1  3  5
+Ag1_payoff_when_Ag1_plays_s2  5  2
+Ag2_payoff_when_Ag1_plays_s2  0  2
