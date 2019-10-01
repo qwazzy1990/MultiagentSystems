@@ -20,7 +20,8 @@ public class Main {
 
         Agent a = new Agent(m.matrix);
         System.out.println(a.toString());
-        System.out.println(a.getDominant());
+        
+        a.nashEquilibrium(0, 0);
         // System.out.println(m.matrix.length);
         // System.out.println(m.matrix[0].length);
        

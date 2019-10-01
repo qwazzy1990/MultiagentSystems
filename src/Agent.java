@@ -27,13 +27,8 @@ public class Agent
         this.numCols = m[0].length;
     }
 
-
-    //Gets the dominant strategy if there exists one
-    int getDominant()
+    public ArrayList<int[]> getAg1Strats()
     {
-        //the strat to return. If -1, then there is no dominant strat
-        int stratNumber = -1;
-
         //Create an array list of all of Ag1s strats
         ArrayList<int[]> strats = new ArrayList<int[]>();
         //Copy ag1's values in the payoff matrix
@@ -46,6 +41,33 @@ public class Agent
             }
             strats.add(temp);
         }//end for
+        return strats;
+    }
+    public ArrayList<int[]> getAg2Strats()
+    {
+        //Create an array list of all of Ag2s strats
+        ArrayList<int[]> strats = new ArrayList<int[]>();
+        //Copy ag2's values in the payoff matrix
+        for(int i = 0; i < this.numRows; i++)
+        {
+            int[] temp = new int[this.numCols];
+            for(int j = 0; j < this.numCols; j++)
+            {
+                temp[j] = this.matrix[i][j][1];
+            }
+            strats.add(temp);
+        }//end for
+        return strats;
+    }
+
+
+    //Gets the dominant strategy if there exists one
+    int getDominant()
+    {
+        //the strat to return. If -1, then there is no dominant strat
+        int stratNumber = -1;
+
+        ArrayList<int[]> strats = getAg1Strats();        
 
         //Go through each row which represents a strategy of Ag1
         int winCount = 1;
@@ -95,8 +117,31 @@ public class Agent
 
 
     //Fix me
-    int nashEquilibrium()
+    //The strategies are labelled s1 and s2 respectively. s1 is agent 1's strategy and s2 is agent 2's strategy
+    int nashEquilibrium(int s1, int s2)
     {
+        //Assumuing A1 plays s1, through all of agent 2's options. If ag2 can do better with another option, then this combination of strategies
+        //is  not a nash equilibrium.
+
+        //Step 1: go to row s1.
+        ArrayList<int[]> agOneStrats = getAg1Strats();
+        ArrayList<int[]> agTwoStrats = getAg2Strats();
+
+        System.out.println(agOneStrats.get(0).length);
+        for(int i = 0; i < agOneStrats.size(); i++){
+            for(int j = 0; j < agOneStrats.get(0).length; j++){
+                System.out.print(agOneStrats.get(i)[j]);
+            }
+            System.out.println();
+        }
+
+        for(int i = 0; i < agTwoStrats.size(); i++){
+            for(int j = 0; j < agTwoStrats.get(0).length; j++){
+                System.out.print(agTwoStrats.get(i)[j]);
+            }
+            System.out.println();
+        }
+
         return 0;
     }
 

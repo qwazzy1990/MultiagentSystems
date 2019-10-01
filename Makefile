@@ -17,7 +17,7 @@ TEST:
 mytest: maketest runtest
 
 maketest: BIN SRC CLASS TEST
-	$(JCC) $(JFLAGS) class src/Main.java src/PayoffTuple.java src/PayoffMatrix.java src/Agent.java src/ReadFile.java
+	$(JCC) $(JFLAGS) class src/Main.java src/PayoffMatrix.java src/Agent.java src/ReadFile.java
 
 runtest:
 	cd class; \
