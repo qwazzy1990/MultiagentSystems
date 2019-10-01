@@ -33,9 +33,7 @@ public class PayoffMatrix
                 {
                     if(Character.isDigit(s.charAt(j)))
                     {
-                        System.out.println(currRow);
 
-                        System.out.println(currCol);
                         this.matrix[currRow][currCol][0]= Character.getNumericValue(s.charAt(j));
                         currCol++;
                     }
@@ -77,7 +75,6 @@ public class PayoffMatrix
             }
             s+= "\n";
         }
-        System.out.println(s);
 
         return s;
     }

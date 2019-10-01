@@ -8,7 +8,7 @@ public class ReadFile {
 
     public void openFile() {
         try {
-            x = new BufferedReader(new FileReader("m1.txt"));
+            x = new BufferedReader(new FileReader("m4.txt"));
         } catch (Exception e) {
             System.out.println("Could not find the file");
         }

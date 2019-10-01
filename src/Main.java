@@ -17,7 +17,10 @@ public class Main {
       
         PayoffMatrix m = new PayoffMatrix(Integer.parseInt(r.a.get(0).trim()), Integer.parseInt(r.a.get(1).trim()));
         m.parseMatrix(r.a);
-        System.out.println(m.toString());
+
+        Agent a = new Agent(m.matrix);
+        System.out.println(a.toString());
+        System.out.println(a.getDominant());
         // System.out.println(m.matrix.length);
         // System.out.println(m.matrix[0].length);
        
