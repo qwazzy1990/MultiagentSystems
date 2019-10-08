@@ -6,12 +6,15 @@ public class ReadFile {
     private BufferedReader x;
     public ArrayList<String> a = new ArrayList<String>();
 
-    public void openFile() {
+    public void openFile(File inFile) {
+
         try {
-            x = new BufferedReader(new FileReader("m4.txt"));
+            x = new BufferedReader(new FileReader(inFile));
         } catch (Exception e) {
             System.out.println("Could not find the file");
+            return;
         }
+
     }
 
     public void readFile() {
@@ -19,8 +22,8 @@ public class ReadFile {
             String aa = x.readLine();
             while (aa != null) {
                 int index = aa.indexOf(" ");
-                aa = aa.substring(index+1, aa.length());
-                    a.add(aa);
+                aa = aa.substring(index + 1, aa.length());
+                a.add(aa);
 
                 aa = x.readLine();
 
@@ -31,10 +34,9 @@ public class ReadFile {
     }
 
     public void closeFile() {
-        try{
-        x.close();
-        }catch(IOException e)
-        {
+        try {
+            x.close();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

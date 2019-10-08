@@ -62,9 +62,24 @@ public class PayoffMatrix
         
 
         String s = new String();
-        
+        for(int i = 0; i < this.numCols; i++)
+        {
+            if(i == 0)
+            {
+                s+= "        ";
+            }
+            s+="Ag2: ";
+            s+="t";
+            s+= Integer.toString(i);
+            s+= " ";
+        }
+        s+="\n";
         for(int i = 0; i < this.numRows; i++)
         {
+            s+= "Ag1:";
+            s+= " s";
+            s+=Integer.toString(i+1);
+            s+= " ";
             for(int j = 0; j < this.numCols; j++){
                 s+="( ";
                 s+= Integer.toString(this.matrix[i][j][0]);

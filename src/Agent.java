@@ -118,7 +118,7 @@ public class Agent
 
     //Fix me
     //The strategies are labelled s1 and s2 respectively. s1 is agent 1's strategy and s2 is agent 2's strategy
-    int nashEquilibrium(int s1, int s2)
+    public boolean nashEquilibrium(int s1, int s2, ArrayList<Integer> arr)
     {
         //Assumuing A1 plays s1, through all of agent 2's options. If ag2 can do better with another option, then this combination of strategies
         //is  not a nash equilibrium.
@@ -126,33 +126,97 @@ public class Agent
         //Step 1: go to row s1.
         ArrayList<int[]> agOneStrats = getAg1Strats();
         ArrayList<int[]> agTwoStrats = getAg2Strats();
+      
+    
+        
+        //go through all of ag1s strats, checking the payoff for ag2's assumed strat
+        for(int i = 0; i < agOneStrats.size(); i++)
+        {
+            //get the value for ag1's ith strat assuming ag2 plays s2
+            int val = agOneStrats.get(i)[s2];
+            //if it is greater than s1 then return false b/c ag1 can do better than s1 assuming ag2 plays s2
+            if(val  >agOneStrats.get(s1)[s2])return false;
+        }//end for
 
-        System.out.println(agOneStrats.get(0).length);
-        for(int i = 0; i < agOneStrats.size(); i++){
-            for(int j = 0; j < agOneStrats.get(0).length; j++){
-                System.out.print(agOneStrats.get(i)[j]);
-            }
-            System.out.println();
+        //Go through all of ag2's strats, checking the payoff for ag2 assuming ag1 plays s1
+        for(int i = 0; i < agTwoStrats.get(s1).length; i++)
+        {
+           
+            //if there is a valye greater than s1 then return false b/c ag2 can do better than s2 assuming ag1 plays s1
+            int val = agTwoStrats.get(s1)[i];
+            if(val > agTwoStrats.get(s1)[s2])return false;
         }
-
-        for(int i = 0; i < agTwoStrats.size(); i++){
-            for(int j = 0; j < agTwoStrats.get(0).length; j++){
-                System.out.print(agTwoStrats.get(i)[j]);
-            }
-            System.out.println();
-        }
-
-        return 0;
+        arr.add(s1+1);
+        arr.add(s2+1);
+        return true;
     }
 
+    public ArrayList<Integer> findNash()
+    {
+
+        ArrayList<Integer> strats = new ArrayList<Integer>();
+
+        int a1Strats = this.numRows;
+        int a2Strats = this.numCols;
+
+        //go through all combinations of strats, s1/i, s2/j and try to find a NE
+        for(int i = 0; i < a1Strats; i++)
+            for(int j =0; j < a2Strats; j++)
+                nashEquilibrium(i, j, strats);
+
+
+        return strats;
+    }
+
+    public void runOptions()
+    {
+        int dominant = this.getDominant();
+        if(dominant != -1)
+        {
+            System.out.println("Weakly dominant strategy of Ag1 is s"+Integer.toString(dominant));
+            System.out.println("Ag1 strategy  = s"+Integer.toString(dominant));
+            return;
+
+        }
+        ArrayList<Integer> nash = this.findNash();
+        for(int i = 0; i < nash.size(); i+=2)
+        {
+            System.out.println("Nash option for Ag1 is s"+Integer.toString(nash.get(i))+" because Ag1 can do no better if Ag2 plays s"+Integer.toString(nash.get(i+1)));
+            System.out.println("And Ag2 can do no better than s"+Integer.toString(nash.get(i+1))+" if Ag1 plays s"+Integer.toString(nash.get(i)));
+            System.out.println("Ag1 strategy = s"+Integer.toString(nash.get(i)));
+        }
+        if(nash.size() > 0)return;
+
+        int randStrat = (int)Math.random();
+
+        randStrat = randStrat % this.numRows;
+        randStrat++;
+        System.out.println("Ag1 should play random strategy s"+Integer.toString(randStrat)+" because Ag1 can do no worse");
+        
+    }
     public String toString()
     {
 
         String s = new String();
-
-        for(int i = 0; i < this.matrix.length; i++)
+        for(int i = 0; i < this.numCols; i++)
         {
-            for(int j = 0; j < this.matrix[0].length; j++){
+            if(i == 0)
+            {
+                s+= "        ";
+            }
+            s+="Ag2: ";
+            s+="t";
+            s+= Integer.toString(i);
+            s+= " ";
+        }
+        s+="\n";
+        for(int i = 0; i < this.numRows; i++)
+        {
+            s+= "Ag1:";
+            s+= " s";
+            s+=Integer.toString(i+1);
+            s+= " ";
+            for(int j = 0; j < this.numCols; j++){
                 s+="( ";
                 s+= Integer.toString(this.matrix[i][j][0]);
                 s+= ",";

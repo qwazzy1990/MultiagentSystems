@@ -8,26 +8,31 @@ public class Main {
     public static void main(String[] args) {
 
        
-
+        File inFile = null;
+        if (0 < args.length) {
+           inFile = new File(args[0]);
+           System.out.println(args[0]);
+        } else {
+           System.err.println("Invalid arguments count:" + args.length);
+           return;
+        }
         ReadFile r = new ReadFile();
-        r.openFile();
+        r.openFile(inFile);
         r.readFile();
         r.closeFile();
        
       
         PayoffMatrix m = new PayoffMatrix(Integer.parseInt(r.a.get(0).trim()), Integer.parseInt(r.a.get(1).trim()));
+       
         m.parseMatrix(r.a);
 
         Agent a = new Agent(m.matrix);
         System.out.println(a.toString());
-        
-        a.nashEquilibrium(0, 0);
-        // System.out.println(m.matrix.length);
-        // System.out.println(m.matrix[0].length);
-       
 
-        //let's try to open PDF file
-        // file = new File("/Users/pankaj/java.pdf");
-        // if(file.exists()) desktop.open(file);
+        a.runOptions();
+        
+        // int arr[] = a.findNash();
+        // System.out.printf("%d %d\n", arr[0], arr[1]);
+       
     }
 }

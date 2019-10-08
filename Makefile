@@ -21,7 +21,7 @@ maketest: BIN SRC CLASS TEST
 
 runtest:
 	cd class; \
-	java Main
+	java Main m1.txt
 
 clean:
 	if [ -d "bin" ]; then rm -rf ./bin/; fi;
